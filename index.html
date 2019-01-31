@@ -262,7 +262,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/31/a/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/31/sort/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="YueHaichun">
@@ -281,7 +281,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/31/a/" itemprop="url">a</a></h1>
+                <a class="post-title-link" href="/2019/01/31/sort/" itemprop="url">sort</a></h1>
         
 
         <div class="post-meta">
@@ -293,7 +293,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-31T15:12:22+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-31T15:16:33+08:00">
                 2019-01-31
               </time>
             
@@ -333,7 +333,14 @@
       
         
           
-            <p>使用一下</p>
+            <p><strong>1.直接排序</strong><br>基本思想：假设前面n-1个数有序，要把第i个数插入到前面有序数中</p>
+<p><strong>2.希尔排序</strong><br>基本思想：按gap进行分组，然后每组进行直排，每次gap/2</p>
+<p><strong>3.简单选择排序</strong><br>基本思想：在一个数列中找到最小的，若非第一个数则交换数，依次排序第二个等等</p>
+<p><strong>4.堆排序</strong><br>基本思想：建立最大堆，将最大的数放父节点，与序列最后一个数交换。<br>                  交换后在排列剩下的n-1个数，使其满足最大堆性质<br>                  直到堆中只剩下一个元素<br>                  建立最大堆  调整最大堆  在最大堆中找到最大元素放在末尾 </p>
+<p><strong>5.冒泡排序</strong><br>基本思想：无序序列中  遍历元素，一次比较两个元素找出序列中最大的，放在末尾<br>                  第一次完成后，序列最大值在最末位</p>
+<p><strong>6.快速排序</strong><br>基本思想：冒泡排序升级<br>                  找一个基准数（一般是序列中第一个或最后一个），遍历数据，比基准数大的放在右边，比基准数小的放在左边<br>                  两部分分别进行快排，结果是左边+base+右边</p>
+<p><strong>7.快速排序</strong><br>基本思想：拆分+合并<br>                  将两个有序子序列合并，即先将子序列有序，再将子序列段有序<br>                  拆分子序列，直到只剩一个元素<br>                  合并子序列，比较两个子序列的第一个元素，删除小的，放入最终序列，再比较其他的</p>
+<p><strong>8.基数排序</strong><br>基本思想：桶排序<br>                  先根据个位数，将元素依次对应放到标号为0-9的木桶中<br>                  再根据十位数，放入到木桶中<br>                  再根据百位数，放入到木桶中<br>                  直到第一个木桶中的元素个数等于序列元素个数</p>
 
           
         
