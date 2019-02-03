@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="活在梦里">
+<meta name="description" content="Bagging和BoostingBagging:套袋法.各学习器之间互不依赖，是一种并行方法，各个分类器的权重是相等的，有放回的抽样。(1)从原始样本集中抽取训练集，每轮从原始样本中抽取n个训练样本，共进行k伦，得到k个训练集；(2)每次使用一个训练集得到一个模型，k个训练集得到k个模型；(2)对于分类问题：将上步得到的k个模型采用投票的方式得到分类结果；对于回归：计算上述模型的均值作为最后结果。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习掌握知识">
 <meta property="og:url" content="http://yoursite.com/2019/02/02/机器学习掌握知识/index.html">
 <meta property="og:site_name" content="To Be Someone">
-<meta property="og:description" content="活在梦里">
+<meta property="og:description" content="Bagging和BoostingBagging:套袋法.各学习器之间互不依赖，是一种并行方法，各个分类器的权重是相等的，有放回的抽样。(1)从原始样本集中抽取训练集，每轮从原始样本中抽取n个训练样本，共进行k伦，得到k个训练集；(2)每次使用一个训练集得到一个模型，k个训练集得到k个模型；(2)对于分类问题：将上步得到的k个模型采用投票的方式得到分类结果；对于回归：计算上述模型的均值作为最后结果。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-02T06:18:51.134Z">
+<meta property="og:updated_time" content="2019-02-03T15:22:37.331Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习掌握知识">
-<meta name="twitter:description" content="活在梦里">
+<meta name="twitter:description" content="Bagging和BoostingBagging:套袋法.各学习器之间互不依赖，是一种并行方法，各个分类器的权重是相等的，有放回的抽样。(1)从原始样本集中抽取训练集，每轮从原始样本中抽取n个训练样本，共进行k伦，得到k个训练集；(2)每次使用一个训练集得到一个模型，k个训练集得到k个模型；(2)对于分类问题：将上步得到的k个模型采用投票的方式得到分类结果；对于回归：计算上述模型的均值作为最后结果。">
 
 
 
@@ -360,7 +360,43 @@
       
 
       
-        
+        <h2 id="Bagging和Boosting"><a href="#Bagging和Boosting" class="headerlink" title="Bagging和Boosting"></a>Bagging和Boosting</h2><h3 id="Bagging-套袋法"><a href="#Bagging-套袋法" class="headerlink" title="Bagging:套袋法."></a>Bagging:套袋法.</h3><p>各学习器之间互不依赖，是一种并行方法，各个分类器的权重是相等的，有放回的抽样。<br>(1)从原始样本集中抽取训练集，每轮从原始样本中抽取n个训练样本，共进行k伦，得到k个训练集；<br>(2)每次使用一个训练集得到一个模型，k个训练集得到k个模型；<br>(2)对于分类问题：将上步得到的k个模型采用投票的方式得到分类结果；对于回归：计算上述模型的均值作为最后结果。</p>
+<h3 id="Boosting-提升法"><a href="#Boosting-提升法" class="headerlink" title="Boosting:提升法."></a>Boosting:提升法.</h3><p>(前向分布算法+加法模型)<br>个体学习器之间存在依赖关系，每个学习器都是基于之前学习器的结果，关注被错分的数据来获得新的学习器，达到提升的效果。分类的结果是基于所有分类器的加权求和结果的，分类器的权重不等，每个权重代表对应的分类器在上一轮迭代中的成功度。串行训练<br>(1)通过提高在前一轮被弱分类器错分的样本的比重，减少分对的样本的比重，是分类器对误分的数据有较好的效果；<br>(2)通过加法模型将弱分类器进行线性组合，如AdaBoosting通过加权多数表决方法，即增大错误率小的分类器的权值，减小错误率大的权值。</p>
+<h3 id="Bagging-和-Boosting-区别："><a href="#Bagging-和-Boosting-区别：" class="headerlink" title="Bagging 和 Boosting 区别："></a>Bagging 和 Boosting 区别：</h3><p>样本选择<br>bagging：有放回选取，构建k个训练集，各轮训练集之间相互独立，每个样本权重都是相同<br>boosting：每一轮的训练集不变，只是每个样本在分类器中的权重变了，根据上一轮的错误率                不断调整，错误率大，权重越大<br>预测函数<br>bagging：所有预测函数权重想等<br>boosting：每个弱分类器对应权重不等，分类误差小的，权重更大<br>并行计算<br>bagging：各个预测函数并行生成<br>boosting：顺序生成，后一个模型需要根据前一个模型结果而调整</p>
+<h2 id="Boosting-Tree-提升树模型-前向分布算法-加法模型"><a href="#Boosting-Tree-提升树模型-前向分布算法-加法模型" class="headerlink" title="Boosting Tree 提升树模型  (前向分布算法+加法模型)"></a>Boosting Tree 提升树模型  (前向分布算法+加法模型)</h2><p>以决策树为基本分类器的提升方法，对分类问题的决策树为分类二叉树，对回归问题为回归二叉树。<br>可以表示为决策树的加法模型：<br>其中，T()表示决策树，M为树的个数，Θ表示决策树的参数；<br>提升树算法采用前向分部算法。首先确定f0(x) = 0,第m步:<br>对决策树的参数Θ的确定采用经验风险最小化来确定:<br>对于不同的问题采用的损失函数不同，在决策树中使用的就是0/1损失函数，对与回归问题来说，一般采用平方误差函数。<br>对于回归问题，关于回归树的生成可以参考CART算法中回归树的生成。<br>输入：<br>输出：<br>对于一颗回归树可以表示为：<br>那么在前向分步算法的第m步中也就是求解第m个回归树模型时，为了确定参数需要求解：</p>
+<p>当采用平方误差损失函数时，损失函数为：<br>将上面的待求解式子带入到下面的平方误差函数中可以得到以下表达式：</p>
+<p>这就表明每一次进行回归树生成时采用的训练数据都是上次预测结果与训练数据值之间的残差。这个残差会逐渐的减小。<br>算法流程：<br>（1）、初始化f0(x)= 0；<br>（2）、对于m=1,2,…,M<br>（a）按照计算残差作为新的训练数据的 y<br>（b） 拟合残差 r 学习一颗回归树，得到这一轮的回归树：<br>（c） 更新：<br>（3） 得到回归提升树：</p>
+<h2 id="AdaBoost-Adaptive-Boosting-自适应增强"><a href="#AdaBoost-Adaptive-Boosting-自适应增强" class="headerlink" title="AdaBoost (Adaptive Boosting 自适应增强)"></a>AdaBoost (Adaptive Boosting 自适应增强)</h2><p>是一类Boosting算法，符合Boosting的训练过程。<br>提高前一轮错误分类的样本的权值，降低正确分类样本的权值；加大分类错误率小的分类器的权值，减小分类错误率达的分类器的权值。<br>当AdaBoost的基本分类器选择树模型时(非必须)，应该使用为分类树，而GBDT和XGBoost全都是用回归树。<br>输入：训练数据集T={(,),(,),…,(,)}, 其中 ∈−1,1<br>1.初始化训练样本的权值分布：D1=(,,…,),, i=1,2,…,N<br>2.对于m=1,2,…, M<br>(a)使用具有权值分布的训练数据集进行学习，得到弱分类器<br>(b)计算在训练数据集上的分类误差率：<br>在加权的训练集上的分类误差率是被误分类样本权值之和。<br>(c)计算在强分类器中所占的权重：<br>表示在最终分类器中重要性。时，，并且随着减小而增大，所以误差率小的分类器权重大。<br>(d)更新训练数据集的权值分布（这里，是归一化因子，为了使样本的概率分布和为1）：</p>
+<p>误分类的样本权值变大，而正确分类的权值减小。</p>
+<p>不改变所给训练数据，不断改变训练数据权值分布，使得训练数据在基本分类器中的学习起到不同作用。<br>3.构建基本分类器<br>M个分类器的加权表决。的符号表示实例x的类别，的绝对值表示分类的确信度。<br> 得到最终分类器：<br>从算法流程上看，AdaBoost的关键是计算两个权重值：第一个是样本的权重值，第二个是第n个分类器的权重值。<br>样本的权重值除第一个分类器初始化为了外，其余都是利用规范因子×样本加权的指数损失数值。规范因子其实就是所有样本的加权指数损失值的和。而加权指数损失值就是，其实就是样本的权重×样本在当前模型下的指数损失值。<br>第二个权重就是每个分类器的权重，其直接由一个对数比率给出，比率是正确率与错误率的比值。</p>
+<h2 id="GBDT-梯度提升树-Gradient-Boosting-Decision-Tree"><a href="#GBDT-梯度提升树-Gradient-Boosting-Decision-Tree" class="headerlink" title="GBDT 梯度提升树(Gradient Boosting Decision Tree)"></a>GBDT 梯度提升树(Gradient Boosting Decision Tree)</h2><p>采用的是boosting的思想，先从初始训练集训练出一个基学习器，再根据基学习器的表现对训练样本分布进行调整，使得基学习器做错的训练样本在后续受到更多的关注，然后基于调整后的样本分布来训练下一个基学习器，最后将所有基学习器加权结合。GDBT在传统的boosting的基础上，将以决策树为基函数的提升树拟合残差，利用损失函数的负梯度在当前模型的值作为残差的估计。<br>利用前一轮迭代的学习器以及损失L(y,)构建一棵cart回归树弱学习器模型使得本次迭代的损失最小。<br>弱分类器一般会选择为CART TREE（GBDT无论是用于回归还是分类问题，用的都是CART回归树）。由于上述高偏差和简单的要求，每个分类回归树的深度不会很深。最终的总分类器是将每轮训练得到的弱分类器加权求和得到的（也就是加法模型）。<br>用损失函数的负梯度在当前模型的值来拟合本轮损失的近似值，进而去拟合一个CART回归树。GBDT每轮迭代的时候，都去拟合损失函数在当前模型下的负梯度。<br>用损失函数的负梯度来拟合损失误差，这方法适用回归和分类（只不过损失函数不同）。</p>
+<p>第t轮第i个样本的损失函数的负梯度拟合。<br>利用可以拟合一颗CART回归树，得到第t颗回归树。</p>
+<h3 id="GBDT回归算法："><a href="#GBDT回归算法：" class="headerlink" title="GBDT回归算法："></a>GBDT回归算法：</h3><p>输入：训练样本 D={(,),(,),⋯,(,)}, 最大迭代次数（基学习器数量）T，损失函数 L<br>输出：强学习器 H(x)<br>算法流程<br>Step1:初始化基学习器<br>Step2:当迭代次数 t=1,2,⋯,T<br>（1）计算 t 次迭代的负梯度<br>（2）利用  (i=1,2,⋯,m),拟合第 t 棵CART回归树，<br>（3）对叶子结点区域 j=1,2,⋯,J，计算最佳拟合值<br>（4）更新强学习器<br>Step3:得到强学习器   </p>
+<h3 id="GBDT分类算法："><a href="#GBDT分类算法：" class="headerlink" title="GBDT分类算法："></a>GBDT分类算法：</h3><h4 id="二分类："><a href="#二分类：" class="headerlink" title="二分类："></a>二分类：</h4><p>损失函数：<br>负梯度误差为：<br>叶子结点最佳残差拟合值：</p>
+<h4 id="多分类：gbdt-的多分类是针对每个类都独立训练一个-CART-Tree"><a href="#多分类：gbdt-的多分类是针对每个类都独立训练一个-CART-Tree" class="headerlink" title="多分类：gbdt 的多分类是针对每个类都独立训练一个 CART Tree"></a>多分类：gbdt 的多分类是针对每个类都独立训练一个 CART Tree</h4><p>损失函数：<br>负梯度误差：<br>叶子结点最佳残差拟合值：<br>除了损失函数和残差拟合不一样之外，二分类和多分类和回归问题都同步骤。<br><a href="https://www.cnblogs.com/ModifyRong/p/7744987.html" target="_blank" rel="noopener">https://www.cnblogs.com/ModifyRong/p/7744987.html</a></p>
+<h3 id="gbdt如何选择特征？"><a href="#gbdt如何选择特征？" class="headerlink" title="gbdt如何选择特征？"></a>gbdt如何选择特征？</h3><p>gbdt选择特征的细节其实是想问你CART Tree生成的过程。这里有一个前提，gbdt的弱分类器默认选择的是CART。也可以选择其他弱分类器的，选择的前提是低方差和高偏差。<br>CART TREE 生成的过程其实就是一个选择特征的过程。回归树选择特征的方法是：平方误差最小化。假设我们目前总共有 M 个特征。第一步我们需要从中选择出一个特征 j，做为二叉树的第一个节点，然后对特征 j 的值选择一个切分点 s。如果一个样本的特征j的值小于s，则分为一类，如果大于s,则分为另外一类，如此便构建了CART 树的一个节点。其他节点的生成过程和这个是一样的。现在的问题是在每轮迭代的时候，如何选择这个特征 j,以及如何选择特征 j 的切分点 s。<br>遍历所有可能性，找到一个最好的特征和它对应的最优特征值让当前式子的值最小。</p>
+<h3 id="具体步骤："><a href="#具体步骤：" class="headerlink" title="具体步骤："></a>具体步骤：</h3><p>(1)    首先遍历每个特征j，然后对每个特征遍历它所有可能的切分点(该特征的每个取值s)，计算每个切分点(j,s)的损失函数，选择损失函数最小的切分点。</p>
+<p>其中，分别为，区间的输出平均值。<br>(2)    使用上步得到的切分点将当前的输入空间划分为两个部分<br>(3)    然后将被划分后的两个部分再次计算切分点，依次类推，直到不能继续划分<br>(4)    最后将输入空间划分为Mg 饿区域，，…,,生成的决策树为：</p>
+<p>。<br>复杂度高，假如总共F个特征，每个特征N个取值，生成的决策树有S个内部节点，则该算法的时间复杂度为：O(F<em>N</em>S)。</p>
+<h3 id="GBDT-如何构建特征-笔记上有答案"><a href="#GBDT-如何构建特征-笔记上有答案" class="headerlink" title="GBDT 如何构建特征? (笔记上有答案)"></a>GBDT 如何构建特征? (笔记上有答案)</h3><h3 id="GBDT本身是不能产生特征的，但是我们可以利用GBDT去产生特征的组合。利用GBDT去产生有效的特征组合，以便用于逻辑回归的训练。"><a href="#GBDT本身是不能产生特征的，但是我们可以利用GBDT去产生特征的组合。利用GBDT去产生有效的特征组合，以便用于逻辑回归的训练。" class="headerlink" title="GBDT本身是不能产生特征的，但是我们可以利用GBDT去产生特征的组合。利用GBDT去产生有效的特征组合，以便用于逻辑回归的训练。"></a>GBDT本身是不能产生特征的，但是我们可以利用GBDT去产生特征的组合。利用GBDT去产生有效的特征组合，以便用于逻辑回归的训练。</h3><h3 id="GBDT-为什么用回归树而不是分类树？"><a href="#GBDT-为什么用回归树而不是分类树？" class="headerlink" title="GBDT 为什么用回归树而不是分类树？"></a>GBDT 为什么用回归树而不是分类树？</h3><p>GBDT 无论用于分类还是回归一直都是使用的CART 回归树。因为GBDT每轮的训练是在上一轮的训练的残差基础之上进行训练的，这里的残差就是当前模型的负梯度值。这就意味着每棵树的值是连续的可叠加的，这一点和回归树输出连续值不谋而合。由于是残差逼近的方式，这就要求每轮迭代的时候，弱分类器的输出的结果相减是有意义的。残差相减是有意义的。如果选用的弱分类器是分类树，类别相减是没有意义的。</p>
+<h3 id="GBDT数据基本训练过程："><a href="#GBDT数据基本训练过程：" class="headerlink" title="GBDT数据基本训练过程："></a>GBDT数据基本训练过程：</h3><p>(1)先对这部分数据进行一个CART训练。训练完一个结果之后，一棵树训练一定是不准确的。那么经过评估函数评估误差之后，就进入第二棵树的生成过程中。<br>(2)第二棵树的目标并不是原目标，而是目标与上一棵树预测值的残差．残差的取法就是GBDT命名的方式一样，以目标函数的负梯度来作为第二棵树的学习目标。<br>(3)第三棵树的学习目标是前两棵树学习的总残差．这样学习，理论上说我们总的误差在一步步减少。<br>(4)在如此反复迭代ｎ次之后，n_estimator参数限制最大生成树的数目，也是最大迭代次数，当ｎ到达这个数字停止生成新树。<br>(5)将之前每次训练的树的值加起来作为最终训练结果。我们会看到，将每棵的值加起来，实际上是从原目标函数中每次都加上一个负梯度，也就相当于减去一个梯度．这样GBDT的优化过程其实是梯度下降的原理。</p>
+<h3 id="GBDT与RF的区别："><a href="#GBDT与RF的区别：" class="headerlink" title="GBDT与RF的区别："></a>GBDT与RF的区别：</h3><p>相同点：<br>1、GBDT与RF都是采用多棵树组合作为最终结果；这是两者共同点。<br>不同点：<br>1、RF的树可以是回归树也可以是分类树，而GBDT只能是回归树。<br>2、RF中树是独立的，相互之间不影响，可以并行；而GBDT树之间有依赖，是串行。<br>3、RF最终的结果是有多棵树表决决定，而GBDT是有多棵树叠加组合最终的结果。<br>4、RF对异常值不敏感，原因是多棵树表决，而GBDT对异常值比较敏感，原因是当前的错误会延续给下一棵树。<br>5、RF是通过减少模型的方差来提高性能，而GBDT是减少模型的偏差来提高性能的。（原理之前分析过）<br>6、RF不需要进行数据预处理，即特征归一化。而GBDT则需要进行特征归一化。</p>
+<h2 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h2><p>是一种boosting方法，是一种GBDT方法，基学习器除了可以是CART也可以是线性分类器(这个时候xgboost相当于带L1和L2正则化项的逻辑回归)。<br>xgboost和gbdt算法步骤基本相同，都是首先初始化一个常数，gbdt是根据一阶导数，xgboost是根据一阶导数和二阶导数，迭代生成基学习器，相加更新学习器。<br>在XGBoost中的目标函数由两部分构成：其中第一部分便是损失函数,第二部分是正则化函数。</p>
+<h3 id="xgboost特点："><a href="#xgboost特点：" class="headerlink" title="xgboost特点："></a>xgboost特点：</h3><p>1.传统的GBDT的目标函数只有损失函数这一项，而xgboost在此基础上进行了改进，增加了正则项以控制模型的复杂度，防止模型过拟合。正则项包含了树的叶子结点数，每个叶子结点上输出score的L2模的平方和。</p>
+<p>2.xgboost 对损失函数进行二阶泰勒展开，同时用到了一阶和二阶导数，可以更快的在训练集上收敛。<br>3.xgboost权重衰减。在进行完一次迭代后，会将叶子结点的权重乘上该系数，主要是为了削弱每棵树的影响，让后面有更大的学习空间。在实际中，一般把eta调小，迭代次数设置较大。<br>4.xgboost可以使用并行计算，在特征粒度上。计算特征增益的时候可以多线程进行，因为在训练之前对数据进行了排序，保存为block的结构，在之后的迭代中重复的使用这个机构，大大减少计算。<br>5.确实值的处理：对于特征值有缺失的样本，xgboost可以自动学习出缺失值分裂方向。</p>
+<h3 id="节点如何分裂"><a href="#节点如何分裂" class="headerlink" title="节点如何分裂?"></a>节点如何分裂?</h3><p>1.一种办法是贪心算法，遍历一个节点内的所有特征，按照公式计算出按照每一个特征分割的信息增益，找到信息增益最大的点进行树的分割。增加的新叶子惩罚项对应了树的剪枝，当gain小于某个阈值的时候，我们可以剪掉这个分割。但是这种办法不适用于数据量大的时候，因此，我们需要运用近似算法。<br>2.另一种方法：xgboost在寻找splitpoint的时候，不会枚举所有的特征值，而会对特征值进行聚合统计，按照特征值的密度分布，构造直方图计算特征值分布的面积，然后划分分布形成若干个bucket(桶)，每个bucket的面积相同，将bucket边界上的特征值作为splitpoint的候选，遍历所有的候选分裂点来找到最佳分裂点。<br>实际上对损失函数的优化就是对第t棵树结构进行分裂，启发式的找到最优树结构的过程。而每次分裂，对应于将属于一个叶结点（初始情况下只有一个叶结点，即根结点）下的训练样本分配到分裂出的两个新叶结点上，每个叶结点上的训练样本都会对应一个模型学出的概率值，而损失函数本身满足样本之间的累加特性，所以，可以通过将分裂前的叶结点上样本的损失函数和与分裂之后的两个新叶结点上的样本的损失函数之和进行对比，从而找到可用的分裂特征以及特征分裂点。<br>xgboost分裂节点的策略是左右两个字节点的目标函数值之和比父节点小则分裂。这里就会用到一个差值，两个子节点的目标函数减去父节点的目标函数值要大于0。</p>
+<h3 id="调参过程："><a href="#调参过程：" class="headerlink" title="调参过程："></a>调参过程：</h3><p>在xgboost调参中，一般有两种方式用于控制过拟合：<br>1、直接控制参数的复杂度<br>2.可以减小步长 eta，但是需要增加num_round，来平衡步长因子的减小</p>
+<h3 id="处理非平衡数据集："><a href="#处理非平衡数据集：" class="headerlink" title="处理非平衡数据集："></a>处理非平衡数据集：</h3><p>1、如果你关注预测结果的排序结果auc: 平衡正负样本的权重，通过scale_pos_weight来处理。 2、如果你关注预测正确的概率：这种情况下，你不可以对这个数据进行re-balance,如果你采样或者别的操作，会改变原始数据集合的分布。可以设置参数max_delta_step为一个确定的数，这有助于模型收敛。</p>
+<h3 id="Xgboost主要参数"><a href="#Xgboost主要参数" class="headerlink" title="Xgboost主要参数"></a>Xgboost主要参数</h3><p>objective：学习任务，如选择multi：softmax 为多分类<br>gammana：用于控制是否后剪枝，参数越大越保守 一般为0.1，0.2<br>max-depth：树的最大深度，越大越容易过拟合<br>lambda：控制模型复杂度的权重值的l2正则化项参数，参数越大，模型越不容易过拟合<br>num-round：梯度提升树的个数，值越大，学习能力越强<br>eta：单颗树的学习率，通过缩减特征的权重提升计算过程更保守</p>
+<h3 id="xgboost是如何进行特征选择和特征重要性计算的？"><a href="#xgboost是如何进行特征选择和特征重要性计算的？" class="headerlink" title="xgboost是如何进行特征选择和特征重要性计算的？"></a>xgboost是如何进行特征选择和特征重要性计算的？</h3><p>Xgboost计算特征重要性主要使用的是特征在分裂结点中使用的次数和总信息增益，一个特征使用次数越多，表示重要性越高。</p>
+<h2 id="RF"><a href="#RF" class="headerlink" title="RF"></a>RF</h2><p><a href="https://blog.csdn.net/qq_28031525/article/details/70207918" target="_blank" rel="noopener">https://blog.csdn.net/qq_28031525/article/details/70207918</a><br>随机森林是指利用多棵树对样本进行训练并预测的一种分类器。它由多棵CART构成，对于每棵树，使用的训练集都是从总的训练集中有放回采样出来的。在训练每棵树的结点时，使用的特征是从所有特征中按照一定比例随机无放回的抽取。<br>RF、GBDT和XGBoost都属于集成学习（Ensemble Learning），集成学习的目的是通过结合多个基学习器的预测结果来改善单个学习器的泛化能力和鲁棒性。<br>    提到随机森林，就不得不提Bagging，Bagging可以简单的理解为：放回抽样，多数表决（分类）或简单平均（回归）,同时Bagging的基学习器之间属于并列生成，不存在强依赖关系。Random Forest（随机森林）是Bagging的扩展变体，它在以决策树为基学习器构建Bagging集成的基础上，进一步在决策树的训练过程中引入了随机特征选择，因此可以概括RF包括四个部分：1、随机选择样本（放回抽样）；2、随机选择特征；3、构建决策树；4、随机森林投票（平均）。<br>    随机选择样本和Bagging相同，随机选择特征是指在树的构建中，会从样本集的特征集合中随机选择部分特征，然后再从这个子集中选择最优的属性用于划分，这种随机性导致随机森林的偏差会有稍微的增加（相比于单棵不随机树），但是由于随机森林的‘平均’特性，会使得它的方差减小，而且方差的减小补偿了偏差的增大，因此总体而言是更好的模型。 </p>
+<h3 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h3><ol>
+<li>能够处理高维数据，并且不用特征选择，而且能在训练后，给出特征的重要性；</li>
+<li>模型泛化能力强；</li>
+<li>训练速度快，可以做并行化方法；<h3 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h3>1．在噪声较大的分类或回归问题会过拟合；</li>
+<li>对于有不同取值的属性的数据，取值划分较多的属性会对随机森林产生更大的影响，所以随机森林在这种数据上产生的属性权值是不可信的；<h3 id="训练过程："><a href="#训练过程：" class="headerlink" title="训练过程："></a>训练过程：</h3>(1)给定训练集S，测试集T，特征维数F。确定参数：使用到的CART的数量t，每棵树的深度d，每个节点使用到的特征数量f，终止条件：节点上最少样本数s，节点上最少的信息增益m<br>对于第1-t棵树，i=1-t：<br>(2)从S中有放回的抽取大小和S一样的训练集S(i)，作为根节点的样本，从根节点开始训练<br>(3)如果当前节点上达到终止条件，则设置当前节点为叶子节点，如果是分类问题，该叶子节点的预测输出为当前节点样本集合中数量最多的那一类c(j)，概率p为c(j)占当前样本集的比例；如果是回归问题，预测输出为当前节点样本集各个样本值的平均值。然后继续训练其他节点。如果当前节点没有达到终止条件，则从F维特征中无放回的随机选取f维特征。利用这f维特征，寻找分类效果最好的一维特征k及其阈值th，当前节点上样本第k维特征小于th的样本被划分到左节点，其余的被划分到右节点。继续训练其他节点。有关分类效果的评判标准在后面会讲。<br>(4)重复(2)(3)直到所有节点都训练过了或者被标记为叶子节点。<br>(5)重复(2),(3),(4)直到所有CART都被训练过。<h3 id="预测过程"><a href="#预测过程" class="headerlink" title="预测过程"></a>预测过程</h3>对于第1-t棵树，i=1-t：<br>(1)从当前树的根节点开始，根据当前节点的阈值th，判断是进入左节点(&lt;th)还是进入右节点(&gt;=th)，直到到达，某个叶子节点，并输出预测值。<br>(2)重复执行(1)直到所有t棵树都输出了预测值。如果是分类问题，则输出为所有树中预测概率总和最大的那一个类，即对每个c(j)的p进行累计；如果是回归问题，则输出为所有树的输出的平均值。<br>有关分类效果的评判标准，因为使用的是CART，因此使用的也是CART的评判标准，和C3.0,C4.5都不相同。<br>对于分类问题（将某个样本划分到某一类），也就是离散变量问题，CART使用Gini值作为评判标准。定义为 为当前节点上数据集中第k类样本的比例。<br>例如：分为2类，当前节点上有100个样本，属于第一类的样本有70个，属于第二类的样本有30个，则Gini=1−0.7×0.7−0.3×0.3=0.42，可以看出，类别分布越平均，Gini值越大，类分布越不均匀，Gini值越小。在寻找最佳的分类特征和阈值时，评判标准为：argmax（Gini−GiniLeft−GiniRight），即寻找最佳的特征f和阈值th，使得当前节点的Gini值减去左子节点的Gini和右子节点的Gini值最大。对于回归问题，相对更加简单，直接使用argmax(Var−VarLeft−VarRight)作为评判标准，即当前节点训练集的方差Var减去减去左子节点的方差VarLeft和右子节点的方差VarRight值最大。<h3 id="特征重要性度量"><a href="#特征重要性度量" class="headerlink" title="特征重要性度量"></a>特征重要性度量</h3>1.对每一颗决策树，选择相应的袋外数据（out of bag，OOB）​计算袋外数据误差，记为errOOB1.<br>所谓袋外数据是指，每次建立决策树时，通过重复抽样得到一个数据用于训练​决策树，这时还有大约1/3的数据没有被利用，没有参与决策树的建立。这部分数据可以用于对决策树的性能进行评估，计算模型的预测错误率，称为袋外数据误差。<br>​这已经经过证明是无偏估计的,所以在随机森林算法中不需要再进行交叉验证或者单独的测试集来获取测试集误差的无偏估计。<br>2.随机对袋外数据OOB所有样本的特征X加入噪声干扰（可以随机改变样本在特征X处的值），再次计算袋外数据误差，记为errOOB2。<br>​3.假设森林中有N棵树，则特征X的重要性=。这个数值之所以能够说明特征的重要性是因为，如果加入随机噪声后，袋外数据准确率大幅度下降（即errOOB2上升），说明这个特征对于样本的预测结果有很大影响，进而说明重要程度比较高。<h3 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h3>1.计算每个特征的重要性，并按降序排序<br>2.确定要剔除的比例，依据特征重要性剔除相应比例的特征，得到一个新的特征集<br>3.用新的特征集重复上述过程，直到剩下m个特征（m为提前设定的值）<br>4.根据上述过程中得到的各个特征集和特征集对应的袋外误差率，选择袋外误差率最低的特征集。​</li>
+</ol>
+
       
     </div>
     
@@ -454,8 +490,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -522,6 +567,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bagging和Boosting"><span class="nav-number">1.</span> <span class="nav-text">Bagging和Boosting</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bagging-套袋法"><span class="nav-number">1.1.</span> <span class="nav-text">Bagging:套袋法.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boosting-提升法"><span class="nav-number">1.2.</span> <span class="nav-text">Boosting:提升法.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bagging-和-Boosting-区别："><span class="nav-number">1.3.</span> <span class="nav-text">Bagging 和 Boosting 区别：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Boosting-Tree-提升树模型-前向分布算法-加法模型"><span class="nav-number">2.</span> <span class="nav-text">Boosting Tree 提升树模型  (前向分布算法+加法模型)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AdaBoost-Adaptive-Boosting-自适应增强"><span class="nav-number">3.</span> <span class="nav-text">AdaBoost (Adaptive Boosting 自适应增强)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GBDT-梯度提升树-Gradient-Boosting-Decision-Tree"><span class="nav-number">4.</span> <span class="nav-text">GBDT 梯度提升树(Gradient Boosting Decision Tree)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GBDT回归算法："><span class="nav-number">4.1.</span> <span class="nav-text">GBDT回归算法：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GBDT分类算法："><span class="nav-number">4.2.</span> <span class="nav-text">GBDT分类算法：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#二分类："><span class="nav-number">4.2.1.</span> <span class="nav-text">二分类：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多分类：gbdt-的多分类是针对每个类都独立训练一个-CART-Tree"><span class="nav-number">4.2.2.</span> <span class="nav-text">多分类：gbdt 的多分类是针对每个类都独立训练一个 CART Tree</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gbdt如何选择特征？"><span class="nav-number">4.3.</span> <span class="nav-text">gbdt如何选择特征？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体步骤："><span class="nav-number">4.4.</span> <span class="nav-text">具体步骤：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GBDT-如何构建特征-笔记上有答案"><span class="nav-number">4.5.</span> <span class="nav-text">GBDT 如何构建特征? (笔记上有答案)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GBDT本身是不能产生特征的，但是我们可以利用GBDT去产生特征的组合。利用GBDT去产生有效的特征组合，以便用于逻辑回归的训练。"><span class="nav-number">4.6.</span> <span class="nav-text">GBDT本身是不能产生特征的，但是我们可以利用GBDT去产生特征的组合。利用GBDT去产生有效的特征组合，以便用于逻辑回归的训练。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GBDT-为什么用回归树而不是分类树？"><span class="nav-number">4.7.</span> <span class="nav-text">GBDT 为什么用回归树而不是分类树？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GBDT数据基本训练过程："><span class="nav-number">4.8.</span> <span class="nav-text">GBDT数据基本训练过程：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GBDT与RF的区别："><span class="nav-number">4.9.</span> <span class="nav-text">GBDT与RF的区别：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XGBoost"><span class="nav-number">5.</span> <span class="nav-text">XGBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#xgboost特点："><span class="nav-number">5.1.</span> <span class="nav-text">xgboost特点：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#节点如何分裂"><span class="nav-number">5.2.</span> <span class="nav-text">节点如何分裂?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调参过程："><span class="nav-number">5.3.</span> <span class="nav-text">调参过程：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理非平衡数据集："><span class="nav-number">5.4.</span> <span class="nav-text">处理非平衡数据集：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xgboost主要参数"><span class="nav-number">5.5.</span> <span class="nav-text">Xgboost主要参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xgboost是如何进行特征选择和特征重要性计算的？"><span class="nav-number">5.6.</span> <span class="nav-text">xgboost是如何进行特征选择和特征重要性计算的？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RF"><span class="nav-number">6.</span> <span class="nav-text">RF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优点："><span class="nav-number">6.1.</span> <span class="nav-text">优点：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点："><span class="nav-number">6.2.</span> <span class="nav-text">缺点：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练过程："><span class="nav-number">6.3.</span> <span class="nav-text">训练过程：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预测过程"><span class="nav-number">6.4.</span> <span class="nav-text">预测过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征重要性度量"><span class="nav-number">6.5.</span> <span class="nav-text">特征重要性度量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征选择"><span class="nav-number">6.6.</span> <span class="nav-text">特征选择</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
