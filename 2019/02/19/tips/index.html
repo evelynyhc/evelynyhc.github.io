@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="tips,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -80,14 +80,13 @@
 
 
 <meta name="description" content="Tips优化器tipsAdam优化器 β1，β2，ϵ***，常设为 0.9、0.999、10−8就会有不错的表现      权重衰减系数也有建议：0.0005Dropout通常在全链接层间使用防过拟合，比率控制在[0.2,0.5]之间。 Dropout注意两点：1.在rnn中，如果直接放在memory cell中，循环会放大噪声，扰乱学习。一般会建议放在输入和输出层；2.不建议dropout后直接">
-<meta name="keywords" content="tips">
 <meta property="og:type" content="article">
 <meta property="og:title" content="tips">
 <meta property="og:url" content="http://yoursite.com/2019/02/19/tips/index.html">
 <meta property="og:site_name" content="To Be Someone">
 <meta property="og:description" content="Tips优化器tipsAdam优化器 β1，β2，ϵ***，常设为 0.9、0.999、10−8就会有不错的表现      权重衰减系数也有建议：0.0005Dropout通常在全链接层间使用防过拟合，比率控制在[0.2,0.5]之间。 Dropout注意两点：1.在rnn中，如果直接放在memory cell中，循环会放大噪声，扰乱学习。一般会建议放在输入和输出层；2.不建议dropout后直接">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-19T08:03:33.011Z">
+<meta property="og:updated_time" content="2019-02-19T08:14:31.529Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tips">
 <meta name="twitter:description" content="Tips优化器tipsAdam优化器 β1，β2，ϵ***，常设为 0.9、0.999、10−8就会有不错的表现      权重衰减系数也有建议：0.0005Dropout通常在全链接层间使用防过拟合，比率控制在[0.2,0.5]之间。 Dropout注意两点：1.在rnn中，如果直接放在memory cell中，循环会放大噪声，扰乱学习。一般会建议放在输入和输出层；2.不建议dropout后直接">
@@ -293,6 +292,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/tips/" itemprop="url" rel="index">
+                    <span itemprop="name">tips</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -367,9 +388,8 @@
 <h2 id="权值共享的形式有哪些，为什么要共享？"><a href="#权值共享的形式有哪些，为什么要共享？" class="headerlink" title="权值共享的形式有哪些，为什么要共享？"></a>权值共享的形式有哪些，为什么要共享？</h2><p><strong>形式</strong>：<br>深度学习中，最具代表性的就是卷积网络的卷积操作，卷积相比于全链接神经网络参数大大减少；<br>多任务网络中，通常为了降低每个任务的计算量，会共享一个骨干网络；<br>一些相同尺度下的结构化递归网络<br><strong>好处</strong>：<br>在一定程度上能增强参数之间的联系，获得更好的共性特征。同时很大程度上降低了网络的参数，节省计算量和计算所需内存。此外权重共享能起到很好的正则的作用。正则化的目的是为了降低模型复杂度，防止过拟合，而权重共享则正好降低了模型的参数和复杂度。因此一个设计优秀的权值共享方式，在降低计算量的同时，通常会较独享网络有更好的效果。</p>
 <h2 id="微调（fine-tune）"><a href="#微调（fine-tune）" class="headerlink" title="微调（fine-tune）"></a>微调（fine-tune）</h2><p>是指稍微调整参数即可得到优秀的性能，是迁移学习的一种实现方式。微调和从头训练（train from scratch）的本质区别在于模型参数的初始化，train from scratch通常指对网络各类参数进行随机初始化，从零开始训练。而微调的网络以及各类参数已经在其他数据集完成较好的调整具备了一定的表达能力。因此，只需要以较小的学习速率在自己所需的数据集领域进行学习即可得到较为优秀的模型。微调的情况下，无须再重新设计网络结构，只需稍微修改部分层即可，在小数据集上，通常微调的效果比从头训练要好很多。原因在于数据量较小的前提下，训练更多参数容易导致过度拟合。</p>
 <h3 id="微调方式："><a href="#微调方式：" class="headerlink" title="微调方式："></a>微调方式：</h3><p>以图像分类为例，通常情况下由于不同数据集需要的类别数不同，我们需要修改网络的输出顶层。这种情况下有两种微调方式<br>1.不冻结网络模型任何层，对最后的改动层使用较大的学习率，对未改动层以较小的学习率进行全模型训练，进行多轮训练。<br>2.冻结除了顶部改动层以外的所有层参数，即不对冻结部分的层进行参数训练更新，进行若干轮的微调训练，放开顶部层一次啊的若干层或者全部放开所有层的参数，再次进行若干轮训练即可，即分多步训练。</p>
-<h3 id="先冻结底层，训练顶层的原因？"><a href="#先冻结底层，训练顶层的原因？" class="headerlink" title="先冻结底层，训练顶层的原因？"></a>先冻结底层，训练顶层的原因？</h3><pre><code>第二种微调方式，搜线冻结顶部改动层以外的所有层参数，对顶层进行训练，可以理解为顶层的域适应训练，主要用来训练模型的现有特征空间，防止顶层糟糕的初始化对已经具备一定表达能力的层的干扰和破坏，影响最终的性能。之后，在很多深度学习框架教程中会使用放开顶层往下一半的层数，继续进行微调。这样的好处在于越底层的特征往往越是通用的特征，越往上其整体的高层次语义越完备。
-</code></pre><h2 id="背景建模和前景检测"><a href="#背景建模和前景检测" class="headerlink" title="背景建模和前景检测"></a>背景建模和前景检测</h2><p>高斯混合模型，基本思想是使用L高斯模型来表示视频序列中每个像素的特征。在获得新帧图像之后，当前图像中的每个像素与高斯混合模型匹配。如果匹配成功，则将该点确定为背景点，否则，它就是前景点，然后更新高斯混合模型。</p>
-<p>视频中也有很多类型的异常事件难以定义和注释。本文提出的方法可以获得良好的鲁棒性和时效性，而不依赖于大规模的数据大小和较长时间的训练时间，而且不需要大量的注释。</p>
+<h3 id="先冻结底层，训练顶层的原因？"><a href="#先冻结底层，训练顶层的原因？" class="headerlink" title="先冻结底层，训练顶层的原因？"></a>先冻结底层，训练顶层的原因？</h3><p>第二种微调方式，搜线冻结顶部改动层以外的所有层参数，对顶层进行训练，可以理解为顶层的域适应训练，主要用来训练模型的现有特征空间，防止顶层糟糕的初始化对已经具备一定表达能力的层的干扰和破坏，影响最终的性能。之后，在很多深度学习框架教程中会使用放开顶层往下一半的层数，继续进行微调。这样的好处在于越底层的特征往往越是通用的特征，越往上其整体的高层次语义越完备。</p>
+<h2 id="背景建模和前景检测"><a href="#背景建模和前景检测" class="headerlink" title="背景建模和前景检测"></a>背景建模和前景检测</h2><p>高斯混合模型，基本思想是使用L高斯模型来表示视频序列中每个像素的特征。在获得新帧图像之后，当前图像中的每个像素与高斯混合模型匹配。如果匹配成功，则将该点确定为背景点，否则，它就是前景点，然后更新高斯混合模型。<br>视频中也有很多类型的异常事件难以定义和注释。本文提出的方法可以获得良好的鲁棒性和时效性，而不依赖于大规模的数据大小和较长时间的训练时间，而且不需要大量的注释。</p>
 <h2 id="稀疏表示"><a href="#稀疏表示" class="headerlink" title="稀疏表示"></a>稀疏表示</h2><p>用较少的基本信号的线性组合来表达大部分或者全部的原始信号。其中，这些基本信号被称作原子，是从过完备字典中选出来的；而过完备字典则是由个数超过信号维数的原子聚集而来的。可见，任一信号在不同的原子组下有不同的稀疏表示。<br>假设我们用一个m<em>n的矩阵表示数据集x，每一行代表一个样本，每一列代表样本的一个属性，一般而言，该矩阵是稠密的，即大多数元素不为0。稀疏表示的含义是，寻找一个系数矩阵A(K</em>N)以及一个字典矩阵B(M<em>K),使得B</em>A尽可能的还原x，且A尽可能的稀疏。A便是x的稀疏表示。</p>
 <p>稀疏矩阵：矩阵中0元素的个数远大于非零，且0元素分布无规律。<br>稠密矩阵：稀疏矩阵反之。<br>字典学习：为普通稠密表达的样本找到合适的字典，将样本转化为合适的稀疏表达形式，从而使学习任务得以简化，模型复杂度得以降低，通常称为字典学习，亦称稀疏编码。</p>
 <h2 id="Logistic逻辑回归，多用于而分类。判别模型"><a href="#Logistic逻辑回归，多用于而分类。判别模型" class="headerlink" title="Logistic逻辑回归，多用于而分类。判别模型"></a>Logistic逻辑回归，多用于而分类。判别模型</h2><p>适应性：<br>1.用于概率预测。用于可能性预测，得到的结果有可比性。<br>2.用于分类。时间也是判断某人某事发生概率多大，设定阈值，可能性高于阈值是一类，低于阈值是另一类。<br>3.仅能用于线性问题。只有当目标和特征是线性关系时，才能用逻辑回归。注意：一是当知道模型时非线性时，不适合用逻辑回归；二是当使用逻辑回归时，应注意选择和目标为线性关系的特征。<br>4.各特征之间不要求满足独立假设，但各个特征的贡献独立计算。</p>
@@ -404,12 +424,6 @@
     
 
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/tips/" rel="tag"># tips</a>
-          
-        </div>
       
 
       
@@ -526,7 +540,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
