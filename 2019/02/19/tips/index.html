@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="To Be Someone">
 <meta property="og:description" content="Tips优化器tipsAdam优化器 β1，β2，ϵ，常设为 0.9、0.999、10−8就会有不错的表现      权重衰减系数也有建议：0.0005Dropout通常在全链接层间使用防过拟合，比率控制在[0.2,0.5]之间。 Dropout注意两点：1.在rnn中，如果直接放在memory cell中，循环会放大噪声，扰乱学习。一般会建议放在输入和输出层；2.不建议dropout后直接跟上b">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-20T15:52:46.975Z">
+<meta property="og:updated_time" content="2019-02-24T06:43:47.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tips">
 <meta name="twitter:description" content="Tips优化器tipsAdam优化器 β1，β2，ϵ，常设为 0.9、0.999、10−8就会有不错的表现      权重衰减系数也有建议：0.0005Dropout通常在全链接层间使用防过拟合，比率控制在[0.2,0.5]之间。 Dropout注意两点：1.在rnn中，如果直接放在memory cell中，循环会放大噪声，扰乱学习。一般会建议放在输入和输出层；2.不建议dropout后直接跟上b">
@@ -409,7 +409,7 @@
 <h2 id="提升算法性能"><a href="#提升算法性能" class="headerlink" title="提升算法性能"></a>提升算法性能</h2><p>1.通过数据提升性能 2.通过算法提升性功能 3.通过算法调参提升性能 4.通过嵌套模型提升性能</p>
 <h2 id="目标检测"><a href="#目标检测" class="headerlink" title="目标检测"></a>目标检测</h2><p>1.暴力检测    在图片上从右向左，从上至下通过滑动窗口，利用分类思想进行目标识别。<br>2.选择性搜索     ROI<br>3.R-CNN<br>4.FAST R-CNN     使用特征提取器CNN提取整个图像特征，而不是从头开始对每个图像块提取多次。<br>5.SSD </p>
 <h2 id="MaxPooling"><a href="#MaxPooling" class="headerlink" title="MaxPooling"></a>MaxPooling</h2><p>1.当padding为SAME时，对原图像进行扩充，当差偶数个元素是首尾各补一半，差奇数个时前边补奇数个，后边补偶数个<br>2.当padding为VALID时，简单粗暴直接从原始图像首段开始卷积，到最后不能匹配卷积核的部分直接舍去</p>
-<h2 id="卷积计算"><a href="#卷积计算" class="headerlink" title="卷积计算"></a>卷积计算</h2><p>(input size-kernel_size)/strides+1</p>
+<h2 id="卷积计算"><a href="#卷积计算" class="headerlink" title="卷积计算"></a>卷积计算</h2><p>output=[(input size-kernel_size+2padding)/strides]+1</p>
 <h4 id="为什么要用2哥3x3的卷积核来替代一个5x5的卷积核"><a href="#为什么要用2哥3x3的卷积核来替代一个5x5的卷积核" class="headerlink" title="为什么要用2哥3x3的卷积核来替代一个5x5的卷积核"></a>为什么要用2哥3x3的卷积核来替代一个5x5的卷积核</h4><p>两个3x3的卷积核可以替代一个5x5的卷积核，三个3x3的卷积核可以替代7<em>7的卷积核<br>感受野是一样的。。。而且（2x3x3+1）=19&lt; 的远比5x5x1+1=26的参数量更少。<br>假设图片是28</em>28的，使用5*5，步长为1，得到结果：（28-5）/1+1=24<br>使用两个3x3的，这里的两个是指2层：第一层得到是（28-3）/1+1=26。    第二层得到是（26-3）/1+1=24</p>
 <h4 id="为什么卷积核尺寸是奇数"><a href="#为什么卷积核尺寸是奇数" class="headerlink" title="为什么卷积核尺寸是奇数"></a>为什么卷积核尺寸是奇数</h4><p>保证像素点中心位置，避免位置信息偏移<br>填充边缘时能保证两边都能填充，原矩阵依然对称</p>
 
