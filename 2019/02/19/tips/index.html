@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="To Be Someone">
 <meta property="og:description" content="Tips优化器tipsAdam优化器 β1，β2，ϵ，常设为 0.9、0.999、10−8就会有不错的表现      权重衰减系数也有建议：0.0005Dropout通常在全链接层间使用防过拟合，比率控制在[0.2,0.5]之间。 Dropout注意两点：1.在rnn中，如果直接放在memory cell中，循环会放大噪声，扰乱学习。一般会建议放在输入和输出层；2.不建议dropout后直接跟上b">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-24T07:52:34.077Z">
+<meta property="og:updated_time" content="2019-02-25T03:02:13.304Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tips">
 <meta name="twitter:description" content="Tips优化器tipsAdam优化器 β1，β2，ϵ，常设为 0.9、0.999、10−8就会有不错的表现      权重衰减系数也有建议：0.0005Dropout通常在全链接层间使用防过拟合，比率控制在[0.2,0.5]之间。 Dropout注意两点：1.在rnn中，如果直接放在memory cell中，循环会放大噪声，扰乱学习。一般会建议放在输入和输出层；2.不建议dropout后直接跟上b">
@@ -412,6 +412,7 @@
 <h2 id="卷积计算"><a href="#卷积计算" class="headerlink" title="卷积计算"></a>卷积计算</h2><p>output=[(input size-kernel_size+2padding)/strides]+1</p>
 <h4 id="为什么可以用2个3x3的卷积核来替代一个5x5的卷积核"><a href="#为什么可以用2个3x3的卷积核来替代一个5x5的卷积核" class="headerlink" title="为什么可以用2个3x3的卷积核来替代一个5x5的卷积核"></a>为什么可以用2个3x3的卷积核来替代一个5x5的卷积核</h4><p>两个3x3的卷积核可以替代一个5x5的卷积核，三个3x3的卷积核可以替代7x7的卷积核<br>感受野是一样的。。。而且（2x3x3+1）=19&lt; 的远比5x5x1+1=26的参数量更少。<br>假设图片是28x28的，使用5x5，步长为1，得到结果：（28-5）/1+1=24<br>使用两个3x3的，这里的两个是指2层：第一层得到是（28-3）/1+1=26。    第二层得到是（26-3）/1+1=24</p>
 <h4 id="为什么卷积核尺寸是奇数"><a href="#为什么卷积核尺寸是奇数" class="headerlink" title="为什么卷积核尺寸是奇数"></a>为什么卷积核尺寸是奇数</h4><p>保证像素点中心位置，避免位置信息偏移<br>填充边缘时能保证两边都能填充，原矩阵依然对称</p>
+<p>##类别数据不平衡问题<br>1.扩大数据集<br>增加包含小类样本数据的数据，更多的数据能得到更多的分布信息<br>2.对大类数据欠采样<br>减少大类数据样本个数，使之与小样本个数接近。缺点：欠采样操作时若随机丢弃大类样本，可能会丢失重要信心。<br>代表算法：easyensemble。利用集成学习机制，将大类划分为若干个集合供不同的学习器使用，相当于对每个学习器进行了欠采样，但在全局看却不会丢失重要信息<br>3.对小类数据过采样<br>增加小类的数据样本个数<br>4.使用心得评价指标<br>例如准确度这个评价指标在类别不平衡的分类任务中就不适用，可以采用更具说服力的指标如精确度，召回率等<br>5.数据代价加权<br>当分类任务是识别小类，那么可以对分类器的小类样本数据增加权值，降低大类样本的权值，从而使得分类器将重点集中在小类样本身上<br>设计一个代价函数来惩罚稀有类别的错误分类而不是分类丰富的类别</p>
 
       
     </div>
