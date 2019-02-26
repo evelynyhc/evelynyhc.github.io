@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="To Be Someone">
 <meta property="og:description" content="Tips优化器tipsAdam优化器 β1，β2，ϵ，常设为 0.9、0.999、10−8就会有不错的表现      权重衰减系数也有建议：0.0005Dropout通常在全链接层间使用防过拟合，比率控制在[0.2,0.5]之间。 Dropout注意两点：1.在rnn中，如果直接放在memory cell中，循环会放大噪声，扰乱学习。一般会建议放在输入和输出层；2.不建议dropout后直接跟上b">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-26T08:16:31.743Z">
+<meta property="og:updated_time" content="2019-02-26T08:26:32.056Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tips">
 <meta name="twitter:description" content="Tips优化器tipsAdam优化器 β1，β2，ϵ，常设为 0.9、0.999、10−8就会有不错的表现      权重衰减系数也有建议：0.0005Dropout通常在全链接层间使用防过拟合，比率控制在[0.2,0.5]之间。 Dropout注意两点：1.在rnn中，如果直接放在memory cell中，循环会放大噪声，扰乱学习。一般会建议放在输入和输出层；2.不建议dropout后直接跟上b">
@@ -405,7 +405,7 @@
 <h2 id="维数灾难"><a href="#维数灾难" class="headerlink" title="维数灾难"></a>维数灾难</h2><p>训练样本不够多，采用过多的特征，高维特征空间对于样本距离的度量失去意义，映射到低维空间相当于非线性分类器，过度学习特征，泛化能力不好，导致了过拟合。<br>避免维数灾难<br>PCA,LDA,奇异值分解简化数据，拉普拉斯特征映射，Lassio缩减系数，小波分析法。</p>
 <h2 id="聚类和降维"><a href="#聚类和降维" class="headerlink" title="聚类和降维"></a>聚类和降维</h2><p>聚类用于寻找数据内在的分布结构，可以作为一个单独的过程，也可以作为分类等人物的前驱过程。<br>降维是个缓解维数灾难的一个重要方法，就是通过某种数学变换将原始高维属性空间转变为一个低维子空间。<br>聚类针对的是数据点，降维针对数据的特征。</p>
 <h2 id="one-hot-encodeing-独热编码"><a href="#one-hot-encodeing-独热编码" class="headerlink" title="one hot encodeing  独热编码"></a>one hot encodeing  独热编码</h2><p>使用n位状态寄存器来对n个状态进行编码，每个状态都由他独立的寄存器位，并在任意时候，只有一位有效。<br>很多机器学习任务，特征并不是连续值。转化为数字后效率会高很多。<br>自然状态码为：000,001,010,011,100,101<br>独热编码为：000001,000010,000100,001000,010000,100000</p>
-<h2 id="dropout"><a href="#dropout" class="headerlink" title="dropout"></a>dropout</h2><p>随机删除网络中的神经单元。<br><strong>直观理解：</strong>不要依赖于任何一个特征，因为该单元的输入随时可能被清除，实施dropout的结果是它会压缩权重，并完成一些预防过拟合的外层正则化。<br>0.5效果最好，随机生成的网络结构最多。<br><strong>缺点</strong>：代价函数不再被明确定义，每次迭代，都会随机移除一些节点。</p>
+<h2 id="dropout"><a href="#dropout" class="headerlink" title="dropout"></a>dropout</h2><p>随机删除网络中的神经单元。<br><strong>直观理解:</strong>不要依赖于任何一个特征，因为该单元的输入随时可能被清除，实施dropout的结果是它会压缩权重，并完成一些预防过拟合的外层正则化。<br>0.5效果最好，随机生成的网络结构最多。<br><strong>缺点:</strong>代价函数不再被明确定义，每次迭代，都会随机移除一些节点。<br><strong>dropout率的选择:</strong>隐藏结点dropout率等于0.5时最好，因为这时，drorput随机生成的网络结构最多。</p>
 <h2 id="learning-rate"><a href="#learning-rate" class="headerlink" title="learning rate"></a>learning rate</h2><p>1.太大，loss爆炸，输出NaN等<br>2.太小，收敛速度过慢，训练时间大大延长<br>3.可变的学习速率，比如当输出准确率达到某个阈值后，可以让rate减半训练</p>
 <h2 id="梯度下降"><a href="#梯度下降" class="headerlink" title="梯度下降"></a>梯度下降</h2><p>随机梯度下降，SGD，是指梯度下降算法在训练集上，对每一个训练数据都计算误差并更新模型。是一种在线机器学习方法。<br>批量梯度下降，对训练集上每一个数据计算误差，但只在所有训练数据计算完成后才更新模型。对训练集上的一次完整训练称为epoch,因此，在每一个训练epoch之后更新模型。<br>Mini-batch梯度下降，简称batch sizes，较小的值让学习过程收敛更快，但是产生更多噪声；较大的值让学习过程收敛较慢，但是准确的估计误差梯度。<br>Batch size默认最好32；调节batch size时，最好观察模型在不同size下的训练时间和验证误差的学习曲线；调整其他所有超参数之后再调整batch size和学习率。</p>
 <h2 id="提升算法性能"><a href="#提升算法性能" class="headerlink" title="提升算法性能"></a>提升算法性能</h2><p>1.通过数据提升性能 2.通过算法提升性功能 3.通过算法调参提升性能 4.通过嵌套模型提升性能</p>
